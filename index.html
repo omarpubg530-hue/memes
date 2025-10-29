@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> موقع تيمبات  </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c54b5f 0%, #c54cbb 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .image-card:nth-child(1) { animation-delay: 0.1s; }
+        .image-card:nth-child(2) { animation-delay: 0.2s; }
+        .image-card:nth-child(3) { animation-delay: 0.3s; }
+        .image-card:nth-child(4) { animation-delay: 0.4s; }
+        .image-card:nth-child(5) { animation-delay: 0.5s; }
+        .image-card:nth-child(6) { animation-delay: 0.6s; }
+        .image-card:nth-child(7) { animation-delay: 0.7s; }
+        .image-card:nth-child(8) { animation-delay: 0.8s; }
+        .image-card:nth-child(9) { animation-delay: 0.9s; }
+        .image-card:nth-child(10) { animation-delay: 1s; }
+        .image-card:nth-child(11) { animation-delay: 1.1s; }
+        .image-card:nth-child(12) { animation-delay: 1.2s; }
+        .image-card:nth-child(13) { animation-delay: 1.3s; }
+        .image-card:nth-child(14) { animation-delay: 1.4s; }
+        .image-card:nth-child(15) { animation-delay: 1.5s; }
+        .image-card:nth-child(16) { animation-delay: 1.6s; }
+        .image-card:nth-child(17) { animation-delay: 1.7s; }
+
+        .image-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .image-container {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover .image-container img {
+            transform: scale(1.05);
+        }
+
+        .button-container {
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .download-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #2549e7 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+        .download-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-button:active {
+            transform: scale(0.98);
+        }
+
+        .download-button.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            animation: slideInMessage 0.3s ease-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .message.success {
+            background: #4caf50;
+        }
+
+        .message.error {
+            background: #f44336;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        @keyframes slideInMessage {
+            from {
+                transform: translateX(300px);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .image-container {
+                height: 250px;
+            }
+
+            .message {
+                right: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message success" id="successMsg">
+        ✓ تم تحميل الصورة بنجاح!
+    </div>
+
+    <div class="message error" id="errorMsg">
+        ✗ حدث خطأ في التحميل
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>خد احسن التمبات من هنا 😍</h1>
+            <p>دوس علي تحميل و خد الصورة اللي عايزيها❤️</p>
+        </div>
+
+        <div class="gallery" id="galleryContainer">
+        </div>
+    </div>
+
+    <script>
+        const imagesList = [
+    { id: 1, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571277273_1465708298067685_1492151120310076134_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=aDEPzp2eS_8Q7kNvwEJY-wa&_nc_oc=AdlIg3SPIQeIVrN2gx7wN6uctd_P0C-4eIODt0Px4Kf5H0cIig1JEar189iJ5Cq5-Xg&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=rz5AB5GTJ_eneJUK4CpOZw&oh=00_Afck7rPEKdW77Y2jTb7vfbFvcD6ShMVRI0JSTfrkip64JA&oe=69084649" },
+            { id: 2, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571202506_2023407775072480_3304793469000738713_n.jpg?stp=dst-jpg_p851x315_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=e-Xctk4GauUQ7kNvwF_QqEj&_nc_oc=AdmkqxBy_pCMcAPVCw2vhCBVmvWW6dHwB1qPo12hpwbAlY_iwUjmD8F1bW8mr5LozO4&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=OqIn_RasE2GzsRTinq0D5w&oh=00_AffK6wLZvR-QXW_7dwBn9IBaB46snFWg3uVAFtQbxvLeVw&oe=690846A4" },
+            { id: 3, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/572122293_1093950002817106_1203293318898379415_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=UUZ9zsYPMLsQ7kNvwEx5PpP&_nc_oc=AdlDTULw71rKKzivcRf5um-BDZJFGPJFus1A4GQ6zH1837lKSsplB8hdKx_czT2YkXg&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=t_AXIicCRZQhswGs79DG7A&oh=00_AfeaS4llh0KoIBG6EiC5gvtpoUtyhRPlxrwB2Ps-cJk7iA&oe=690837A2" },
+            { id: 4, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/574329862_122213466608495250_935761405904643723_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=YPuvggoMpmIQ7kNvwGaGsLv&_nc_oc=Adlp0SZVe7hVuQp2eT0hCRTpCObwUBGtQMNzol-dGFY5WZrMOSJDbTi599zgly9zd9U&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=M7YmO1c6PQaZ0NBvM7qAmg&oh=00_AfeY8Nxv3XYdqEb94PCDR130f6h3aI4tleFoFH_1AmBoeA&oe=69082C2F" },
+            { id: 5, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571526250_122266298120231140_2711852493984785210_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=f2F9PPx6SJoQ7kNvwElWmT8&_nc_oc=AdkivEwAdPBuXPww1gRqVMS1MIPxgH_r8FMwxZSIo5ZjnYnoATaONeYyM-Ike1PobFs&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=a3Ynb22CugXX0DA_5feAiw&oh=00_AfcGTiV_POhy8wrO4jlYNNH641MIGTKCzcZM9RIOLqepHg&oe=69084780" },
+            { id: 6, src: "https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/573054247_1547645736277213_5897250152498144823_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_ohc=PiYFzt3UQgEQ7kNvwE3Pxg2&_nc_oc=AdnfXQWBJALCgcYEigS87rDUj6G45b6LaLq1wNDYP4dKL0wTW4SY-jJsvkggE5jKs74&_nc_zt=23&_nc_ht=scontent-hbe1-2.xx&_nc_gid=zeq1goYhUGrMzk-8d-CZDg&oh=00_AfeUN0-XFJSCNK-HlP8sh9Tmtx727n5OxFoqNBnaa7VH_A&oe=69083939" },
+            { id: 7, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/572740678_855090680423601_1174181703028581902_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=fV6NWzpenjsQ7kNvwGwWYQr&_nc_oc=Adl3qMqoZQ5Te-lhq15pqyg-gMRaiiJ7pH5-vsOJ-ki-HTnlVQyJpA8JNf7308gwbsg&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=d_TF-KVC-WJCUOJ6r07LGQ&oh=00_AffrDJk1XCr6Mm66EcJ_iAFs7MXutmLAcSumaq3LYyoDOQ&oe=690849F7" },
+            { id: 8, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571342837_2822055237993845_4073635403443381522_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=833d8c&_nc_ohc=2Yo4hapWymQQ7kNvwFhImb8&_nc_oc=AdmzpyfW_dri_YMrVkR_z5jjcle6pWZhywxvkzXfau4RJcTO6uIVFEQlPTtSXAekVzI&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=nnpZvCOJfWPZA36Y3GvGuA&oh=00_Afcfoj0S28PkOP7tIFmGLIVTeuoLuEtGZUJO-oYgBeXgfA&oe=69082B5F" },
+            { id: 9, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571241364_1347983784004427_466332757194032140_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=eea-azdVe0IQ7kNvwHn0rZB&_nc_oc=AdnqUvjH3AGWAFH6w8JkfrPKa2I6s7m67-2t_PjpTVCwjININTABYPZDRBwP3ViPby8&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=TnyFgdgt2Ai2HY-8tr1hQw&oh=00_AfetMvSKB2wy9pF31x2LW0utgT0wHQOWsrl4qN1LClTreA&oe=69083CF7" },
+            { id: 10, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571380189_122156342072751906_6667054348591348669_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=BZomvzVClZ0Q7kNvwGOMQHu&_nc_oc=AdmjnIJUXb27QAEapo7C4mv894xTjU4jyOqZfpRHJeKKv8UIWg3Oj-PqanfHcyunvzI&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=3Xa_lby-neHcZ740WxH8xA&oh=00_Afda5raxhcJw17LvRhApjvhjXArAn-Xi1pP9RzyAFtieDg&oe=69082B94" },
+            { id: 11, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/570599369_852021430492734_808143505569162801_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=W2fTC8W8iUwQ7kNvwGOgrNA&_nc_oc=Adm-GyTuB46wYhpO9IKYjt4d2DdSNjlIioNBLzjLNCZnC91r3m7AV33cvSAHzaw9OCM&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=VvenpXn4SxsuacRMyz3KOg&oh=00_AfeGYNqwT6GXuo1s86hLukNVxjq8jEvVdgCUXL2WXVORKw&oe=690828CE" },
+            { id: 12, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/574570847_122140457588936467_5560686214787811275_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=_6YX7GhkkiIQ7kNvwF6THvT&_nc_oc=Adkd94d5hf3BG1IhC10aWlWZCqCPN4AfMQqkrIsIlD1Xi5UWDc0ioSIuTI6u4fqX5k4&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=c5HZbFshQ2V9Dij3yFVUYw&oh=00_AfdGb8g6t8SjspiQiI9eG4XXcD6ppU0cw-PH8dEy6h5FJA&oe=690849FF" },
+            { id: 13, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571148522_1922544955329218_1463281000622364427_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=AfKtD7s59UMQ7kNvwH0goYJ&_nc_oc=Adm83GgjTEPXXy0d6mMR8epoiPCKuh7wwSHTzwsdeIRYV0Sc57MkraCb4dd75uI2vI8&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=L0XtmVQ3mSV-42cGymKs8w&oh=00_AfethmfGdeNdgkZfOQdUEeuREnKUkp20REPTPJarrWBwHw&oe=6908494E" },
+            { id: 14, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/552953716_122168029466471469_2616487918044201250_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=RFbm8GZBA9YQ7kNvwEeoDGm&_nc_oc=Adk1VSF6gPyPZfPFmygaeFrywtwjqPqgZLdmdK_qRu2Fk39_SEHWTjDlnk6fJDiFvnM&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=DHjZo036Oa-JqsheQ_N17Q&oh=00_AfdpUkmenuAJ9lZLjMZElQ2ffw3vVkNMZHwZz0sL2nbruA&oe=690855B8" },
+            { id: 15, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/531364801_122129479424867687_894942092996611432_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=xExD6fIMMhYQ7kNvwGrR-AA&_nc_oc=Adk75wdJsnmK93AXeJSOv0wV65i55EWFiFqIECtSHDgC2jD-vJ7Ffd6HxH8tBrrxLzc&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=u-qzOM9eb2WCkHP9DiwXeg&oh=00_AfeR3-d41eoGU0Yszhn5cOSEkio7F-1IZFS9EzrN5V8kfw&oe=69082EED" },
+            { id: 16, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/530985757_122248127840134950_76860682077881299_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=pflyemKbWqoQ7kNvwH7XTA1&_nc_oc=Adm_qZNrxWZtReqo8jz_YQrGff9xqLyc_EG10KjjsTFRikQwnG1NIiK0AIdtHQunraM&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=RbkVADsQfjcfYZ8PPlpGPw&oh=00_AfcpdsVfjnI5KO-61lNyss70EUnf-KRB4esgw7WS9ZWong&oe=690856E2" },
+            { id: 17, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571134353_2207309226457645_7473244388761660695_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=bd9a62&_nc_ohc=cE2WptXa83gQ7kNvwENv2DR&_nc_oc=Adkc6Grwg8Z9j5anyoQNoV-QaT8ezxQjArH6pzmQKrzCaKpmetbp2Oi4iSlbqjTZENg&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=emQ8I9fLHANhVNijar9p9Q&oh=00_Afe-l5AwV6IvXTru39DYVS01eSzvZZNXgodabZnd3qIlRw&oe=69084DDB" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/494325228_537875449206489_487730374418152463_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_ohc=p9HzondA-a4Q7kNvwHjOLeS&_nc_oc=AdmOKTOzP3Hsaq3C0a-jwDUejhUv8o3Ts9KghAbfwSmQOZRiOEakAsQE1vYi63mG2HA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gFibUTEyy1-epkjsQBsKhO-ydv23Dz-suHf_QN5CHfEJQ&oe=6929EA2B" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/491024934_1697169757543995_1688963020342029634_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=pUMIlFZkXkwQ7kNvwFU9OTx&_nc_oc=Adl7vvtL8t8IJnPuhv3b6ZbmBE9vUG27m5r9MeJy4G7xruq0EhMbRqCKtHekFg4tZ9E&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gG2A1Kc_YNpG3HF9Sm4p7KUqxCWOHcnaAMLJB2cdd8EYg&oe=6929FD21" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/486801912_4104739829763645_8356576059764493832_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Xa_lxGXnP6oQ7kNvwHQ3Pam&_nc_oc=AdmTzP_fhC2aZzQjCLSgPbzxyEFQu48tt_bKl-mb2QSZ-O5SGURMgalwIOTenpft9I4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gEF__R5_URLLFCQdUPqJrlnUjcDqraWJ8jCUyNqfrbJAA&oe=6929D8D3" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/569865109_1392460435595796_5991003805455113171_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_ohc=48fgh6JUKWsQ7kNvwHdjnqB&_nc_oc=AdmKAI_LI9X_Ax5zWRqu1MtPbjdmOjtx0ESsMIlOIt37rSNuhj0du9oreFUaCErG2Ws&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGWZLEmhcmGPY3ccQu-tvdHVmf1Art9rKItUnlyyf3avA&oe=6929DA1E" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/488835613_1340962760294714_7196238450787683132_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=jlZdnT-l2fMQ7kNvwGWZjDS&_nc_oc=AdnCV1PTwA2bDQafCTjKLH65e1Jl5VUE09nK5FOzIDKQo0Ydui5I_TcQKR5zzTZSYrw&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gEe0uDQyEvTGaaJwLBwG2eM49Sq4u9oNhI-ioxqjlKhiA&oe=6929D76B" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/567536257_2056839098053700_2055386415841916086_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=eqtvjo93ypQQ7kNvwGJGgcH&_nc_oc=AdmvYwIBLd4FpE-Ci7GBKzD8H3vtF8TJZzgsGdfX62d6D_RGRzXl_8D-1gfKzqI0n2A&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gFKpPBuWpO7EWOECj-mWw_q_Zpaf-TUGCmHz6Z9JQA-fA&oe=6929D8DE" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/542447075_24567128126310193_4427682137233639259_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=0024fc&_nc_ohc=0vWyq9nPHo4Q7kNvwEtpvWo&_nc_oc=AdmpDlvB6jP4oX0eZwiu-F-8M1oTYDfJSICyp1kEj3adBYTlzmjKwSYnnGi_yKrjP90&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gFIcqCMzX_2H-fXRoj0SiW_n4QnT_4u-aQcaIFFtmeMlg&oe=6929CB1E" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/471577435_1337932997198575_7377022473199422820_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=LTEsT0Kf5JUQ7kNvwH4PpNF&_nc_oc=Adk6ydloYjlbIVhXMguwIVg77v7Y9VjAWb4I6rnOIGUun_k2Fo0_B8mb0BjGFr26yoA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gEQNMHq_zcy_DsVMrzF_-icfRXnheK_yLZm9LOdsojpew&oe=6929E502" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/552682746_827694166486257_2010021504903982749_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=0024fc&_nc_ohc=olUcNI4v6KgQ7kNvwEreuA7&_nc_oc=AdnUV9ELFMimaBrQ5JxU9parEgD8JKUmrcWjtdDaFxsC3xOsORJngh_iHTqcRFNiMak&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gEgrCGfxzbsVQsOexXkWil12QQ5XoAwMGwSlbhdCzIobg&oe=6929CB06" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/552057320_737616619313201_3512099854397228271_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=0024fc&_nc_ohc=IbUtA71wur8Q7kNvwFEwQGt&_nc_oc=AdkRD7fFzIs9nmI1jkVRL-g96YHMp6IerMm3c6e1BuarlMyqJ3mWTUZd5PbT91KhgPY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGfmhbusxP4qxKDzM0jccP5JcI4vQj7wHAWPk-lqeT-wQ&oe=6929EDC1" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/552317612_1075826954711746_1606072941094681575_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=0024fc&_nc_ohc=-u8hi9k2RKoQ7kNvwGrqO0b&_nc_oc=AdlJ2YVmwgTHKZ0E-SbkzEwErn6JunJ5dfr3eZ1qiCz412ZAcB_OgHGhjfV3PWixCRw&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGSxmyqX0MEBoPTyViHMbGwT32aZ1DRv8CJmkd_ktKwHw&oe=6929CE9B" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/552749226_629855163399024_8091686822943980733_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0024fc&_nc_ohc=65HVv-ElZ44Q7kNvwFHePgQ&_nc_oc=AdkzDFJc4yFB1j1qZdB-B1wmA_2Rnl4FedKPxEMoFf_fIhekt2mNz04Y6JfPbTwrbAo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGIPIhpiNpjEAKA3A3Ld2EJ8XTjkHljgUjjxRVhYsw_1A&oe=6929FE20" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/568198196_1505769257333707_5869536412731169849_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=0024fc&_nc_ohc=OicSuGeQnDEQ7kNvwEmRTM6&_nc_oc=AdnzUM4qfFnms-iMXssYceki4U7pIeQ6WngYTuUZliM02TbRjquuGTDNq-Uw_5tr0gQ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGIMMm6jNUfjv6QFpAXsLMU3IPsW1QkIYujyTmvZzgrSw&oe=6929D5A0" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/567630618_2571406713228513_4167731982447956201_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=RKkmzdxMvWMQ7kNvwENMi0F&_nc_oc=AdnFZFdUinP-IP8FdQAd2ET5Mni5eScrzPyQ7FueL4Yn0xbOPDBXN9KPU0dqoLj3VF4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gFwYaYH6NNusQ2tNq3SP3VTaPSEUHhk5B70B2j_pV4sGQ&oe=6929F522" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/567544973_1394199462278874_534035301970065480_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_ohc=kDpxxPSHH64Q7kNvwG6srbm&_nc_oc=AdkKO0jkov5f196hzUREbPzQ-fLPam4ChcgdM-47Q9SAoOJtg6SGN4ahbH8RXGdFRFo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gHUYgeFZo30k6WyjARmMY7DkyRHCOfHCD1UoiW6FIyr1A&oe=6929ED77" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/564469679_1550151123005324_2886245710001984035_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Cjc8qXqAwa0Q7kNvwFUTR8k&_nc_oc=Adl6Ht5VwFtdbMYqU775L5lES9Wh2FDTOnSM2scu7sFS9JRKTSofPy0UkEJN9Iz8-BE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGw8K6_LKXKC0AItOFsz9fWj5STNoZ5W49IDDnYjoyfsQ&oe=6929F9AD" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/566581247_1110708371050624_4993343845583531845_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=0024fc&_nc_ohc=6hhLo-MkwRkQ7kNvwHUMpvR&_nc_oc=AdlDo62n2ztIgiIcaib_wSb-u76dPU-Ha3UoM2lyQB4iPqNhFejzslmI1RN391woyQo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gE2q6xfB1Vje8qIxJJ9eJcRW5EVHPPTaFTxLNwKrkLlCQ&oe=6929F79C" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/566512224_1097671645878110_8935053872908819689_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=QjLaYg_dCIsQ7kNvwG4aard&_nc_oc=AdkTiGCV0eysEybguyUPTg5BmFOTgyQQVG-ssFL_9dUrMmvzrDImjMZLbnUTvCXQc-A&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gGT65HmZklan-4g20DhhcrmbP54UjPPzY17UTbC0nHtWg&oe=6929F9C4" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t1.15752-9/568710752_807308765610802_5633988856712013282_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=qycYjlO9R6MQ7kNvwFridTj&_nc_oc=AdmZO0iGs7k-bhL_UZuk5zBE1t0LgHU98cdgEvsO5NHb9RzOpdP66HoIBDPg4wPWfM4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&oh=03_Q7cD3gEXePh8hUuwrTjqSFWjm-v9EzNyL-H7RqoNEYZabB3hBQ&oe=6929EB80" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571138310_1390390969319806_3607220053818734743_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=WlxlcAgVKbwQ7kNvwEQW6km&_nc_oc=AdkG42Wl0fKgILGoExW_rEBXJP0Ba_ShtZHRVw_iBs8Q_6t4ryH6r5xWQ2a21cB6Xko&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=0Yri_Dh8vBe4f8ImemmQsQ&oh=00_AfeWsOQZK4jwOUJdrVRJGbsbToASZXoe3hAg5cfzL05vJg&oe=69086C1D" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/573289637_1350521206711153_3452400773687268467_n.jpg?stp=dst-jpg_p552x414_tt6&_nc_cat=107&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=-d3MEPVn4EQQ7kNvwE-TeRd&_nc_oc=AdkoJL2yGI5Tozb_pxRp5U82eFiHBfRz8vS59ShvZp7LDLk9jCX9Ev4ELJPUybGdQu0&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=4gCLlrlgMINBaxugny9ImA&oh=00_AfeO1TZnDuwpXFbRib5MEKiafl5gd0Tl23ylqvM4XNkPNg&oe=69085E5A" },
+            { id: 18, src: "https://scontent.fcai19-4.fna.fbcdn.net/v/t39.30808-6/571224193_1547658762942577_3350423313773472819_n.jpg?stp=dst-jpg_p180x540_tt6&_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=sQRIK6xRBY0Q7kNvwEhCy2o&_nc_oc=AdlYRePEOnsk-OBOcLn4s-GxeWXaATNJlGpWZ1wt6JK1KmXNSVDSKGsbZk0hn0mmCSA&_nc_zt=23&_nc_ht=scontent.fcai19-4.fna&_nc_gid=BYhxPpZxpADeLo6HgwUciw&oh=00_AfcNs2n6S2tHNwkGKHP6AOLLuqqEycAGBgMGg6lG1KKVnw&oe=69085860" },
+         
+        ]
+            
+        function createGallery() {
+            const gallery = document.getElementById('galleryContainer');
+            
+            imagesList.forEach(image => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                
+                card.innerHTML = `
+                    <div class="image-container">
+                        <img src="${image.src}" alt="صورة ${image.id}" loading="lazy">
+                    </div>
+                    <div class="button-container">
+                        <button class="download-button" onclick="handleDownload(${image.id}, this)">
+                            <span class="icon">⬇️</span>
+                            <span>تحميل</span>
+                        </button>
+                    </div>
+                `;
+                
+                gallery.appendChild(card);
+            });
+        }
+
+        async function handleDownload(imageId, buttonElement) {
+            const image = imagesList.find(img => img.id === imageId);
+            if (!image) return;
+
+            buttonElement.classList.add('loading');
+            buttonElement.disabled = true;
+            const originalText = buttonElement.innerHTML;
+            buttonElement.innerHTML = '<span class="icon">⏳</span> <span>جاري...</span>';
+
+            try {
+                const response = await fetch(image.src);
+                
+                if (!response.ok) {
+                    throw new Error('خطأ في التحميل');
+                }
+
+                const imageBlob = await response.blob();
+                const blobUrl = URL.createObjectURL(imageBlob);
+                
+                const downloadLink = document.createElement('a');
+                downloadLink.href = blobUrl;
+                downloadLink.download = `صورة-${imageId}-${Date.now()}.jpg`;
+                
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                URL.revokeObjectURL(blobUrl);
+                
+                showSuccessMessage();
+
+            } catch (error) {
+                console.error('خطأ:', error);
+                showErrorMessage();
+            } finally {
+                buttonElement.classList.remove('loading');
+                buttonElement.disabled = false;
+                buttonElement.innerHTML = originalText;
+            }
+        }
+
+        function showSuccessMessage() {
+            const msg = document.getElementById('successMsg');
+            msg.classList.add('show');
+            
+            setTimeout(() => {
+                msg.classList.remove('show');
+            }, 3000);
+        }
+
+        function showErrorMessage() {
+            const msg = document.getElementById('errorMsg');
+            msg.classList.add('show');
+            
+            setTimeout(() => {
+                msg.classList.remove('show');
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', createGallery);
+    </script>
+</body>
+</html>
